@@ -28,29 +28,31 @@ class MainActivity : ComponentActivity() {
 fun MainApp() {
     val counterValue = remember { mutableStateOf(0) }
     val (text, setText) = remember {mutableStateOf("")}
-    Scaffold() {
-        Column() {
-            TopAppBar {
-                Row(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
-                    Text(text = "Try Jetpack Compose")
-                }
-            }
-            Column(modifier = Modifier
-                .fillMaxHeight()
-                .padding(all = 16.dp)) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(text = "Button clicked ${counterValue.value} times")
-                    Spacer(modifier = Modifier.height(8.dp))
-                    TextField(value = text, onValueChange = setText)
-                }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text="Try Jetpack Compose")
+                },
+                elevation = 4.dp
+            )
+        }
+    ){
+        Column(modifier = Modifier
+            .fillMaxHeight()
+            .padding(all = 16.dp)) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(text = "Button clicked ${counterValue.value} times")
                 Spacer(modifier = Modifier.height(8.dp))
-                ButtonCounter(
-                    count = counterValue.value,
-                    updateCount = {newCount ->
-                        counterValue.value = newCount
-                    }
-                )
+                TextField(value = text, onValueChange = setText)
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            ButtonCounter(
+                count = counterValue.value,
+                updateCount = {newCount ->
+                    counterValue.value = newCount
+                }
+            )
         }
     }
 }
